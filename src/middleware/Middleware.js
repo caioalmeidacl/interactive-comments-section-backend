@@ -11,7 +11,7 @@ function middleware(request, response, next) {
         request.user = verified;
         next();
     } catch(error) {
-        response.status(403).json({ message: "Invalid token"});
+        return response.status(403).json({ message: "Invalid token"});
     }
 }
 

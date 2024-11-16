@@ -11,7 +11,7 @@ class LoginController {
             await auth.login(username, password);
             return res.status(200).send();
         } catch(error) {
-            res.status(400).json({message: error.message});
+            return res.status(400).json({message: error.message});
         }
     }
 }

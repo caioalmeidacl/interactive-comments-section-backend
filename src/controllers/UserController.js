@@ -12,7 +12,7 @@ class UserController {
             
             return response.status(201).send();
         } catch(error) {
-            response.status(400).json({error: error.message});
+            return response.status(400).json({error: error.message});
         }
     }
 
@@ -22,7 +22,7 @@ class UserController {
 
             return response.status(200).json(users);
         } catch(error) {
-            response.status(400).json({error: error.message});
+            return response.status(400).json({error: error.message});
         }
 
     }
