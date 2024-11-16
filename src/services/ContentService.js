@@ -1,18 +1,20 @@
+import { ContentRepository } from "../repositories/ContentRepository.js";
+
 class ContentService {
-    constructor(contentRepository){
-        this.contentRepository = contentRepository;
+    constructor(){
+        this.contentRepository = new ContentRepository();
     }
     
-    create(text) {
-        return this.contentRepository.create(text);
+    async create(content, userId) {
+        await this.contentRepository.create(content, userId);
     }
 
-    list(){
-        return this.contentRepository.list();
+    async getAllContent(){
+        return await this.contentRepository.getAllContent();
     }
 
-    findById(id){
-        return this.contentRepository.findById(id);
+    async findById(id){
+        return await this.contentRepository.findById(id);
     }
 
     findAllByUser(id){

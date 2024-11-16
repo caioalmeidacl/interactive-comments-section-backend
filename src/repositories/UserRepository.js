@@ -1,27 +1,20 @@
-import User from "../models/User";
+import { User } from "../models/User.js";
 
 class UserRepository {
-    static INSTANCE;
-    
-    static getInstance() {
-        if(!this.INSTANCE) new UserRepository();
-        return this.INSTANCE;
-    }
 
-    create(user) {
-        const user = new User();        
-
-        Object.assign(this.user, {
-           user, 
-           create_at: new Date(),            
-        });
-    }
-
-    findByUsername(username) {
-        ///
-
-        return false;
+    async findByUsername(username) {
+        return await User.findOne({ username });
     } 
+
+    async getUsers(){
+        return await User.find();
+    }
+
+    async create(userData) {
+        const user = new User(userData);        
+        
+        await user.save();
+    }
 }
 
 export { UserRepository }

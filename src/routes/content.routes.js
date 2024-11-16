@@ -1,22 +1,19 @@
 import { Router } from "express";
-import { contentController } from "../controllers/Content/index";
-
-// checar token se existe
+import { contentController } from "../controllers/ContentController.js";
+import { middleware } from "../middleware/Middleware.js";
 
 const contentRoutes = Router();
 
-contentRoutes.get("/", (req, res) => {
-    return contentController.list();
+contentRoutes.get("/", middleware,(req, res) => {
+    return contentController.getAllContent(req, res);
 });
 
-contentRoutes.get("/:id", (req, res) => {
+contentRoutes.get("/:id", middleware,(req, res) => {
     return contentController.findById(req, res);
 });
 
-contentRoutes.get("/:iduser", (req, res) => {
-    return contentController.findAllByUser(req, res);
-});
-
-contentRoutes.post("/", (req, res) => {
+contentRoutes.post("/", middleware, (req, res) => {
     return contentController.create(req, res);
 });
+
+export { contentRoutes }

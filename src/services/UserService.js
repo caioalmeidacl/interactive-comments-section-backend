@@ -1,12 +1,20 @@
+import { UserRepository } from "../repositories/UserRepository.js";
+
 class UserService {
-    constructor(userRepository){
-        this.userRepository = userRepository;
+    constructor(){
+        this.userRepository = new UserRepository();
     }
 
-    create(user) {
-        if (this.userRepository.findByName(user.username)) throw new Error("Username already exists");
+    async create(user) {
+        const existingUser = await this.userRepository.findByUsername(user.username);
 
-        return this.userRepository.create(user);
+        if (existingUser) throw new Error("Username already exists");
+
+        await this.userRepository.create(user);
+    }
+
+    async getUsers(){ 
+        return await this.userRepository.getUsers();
     }
 }
 

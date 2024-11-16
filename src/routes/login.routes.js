@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { userController } from "../controllers/User/index";
+import { loginController } from "../controllers/LoginController.js";
 
+const loginRoutes = Router();
 
-// gerar token de usuario logado
-
-const userRoutes = Router();
-
-userRoutes.post("/", (req, res) => {
-    return userController.create(req, res);
+loginRoutes.post("/", (req, res) => {
+    return loginController.login(req, res);
 });
+
+export { loginRoutes }

@@ -1,40 +1,19 @@
-import { Content } from '../models/Content'
+import { Content } from '../models/Content.js'
 
 class ContentRepository {
-    static INSTANCE;
+    async create(content, userId) {
+        const contentModel = new Content({ user: userId, ...content});
 
-    static getInstance() {
-        if(!this.INSTANCE) this.INSTANCE = new ContentRepository();
-        return this.INSTANCE;
+        await contentModel.save();
     }
 
-    create(text) {
-        const content = new Content();
-
-        Object.assign(content, {
-            user,
-            text,
-            create_at: new Date()
-        }); 
-
-        // salvar no banco
+    async getAllContent(){
+       return await Content.find();  
     }
 
-    list(){
-        
+    async findById(id){
+        return await Content.findById(id);
     }
-
-    findById(id){
-
-    }
-
-    findAllByUser(id){
-
-    }
-
-    delete(id) {
-
-    } 
 }
 
 export { ContentRepository }; 
