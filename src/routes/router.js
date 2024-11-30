@@ -6,9 +6,9 @@ import { replyRoutes } from "./reply.routes.js";
 
 const router = Router();
 
-router.use("/login", loginRoutes);
-router.use("/user", userRoutes);
-router.use("/comment", commentRoutes);
-router.use("/reply", replyRoutes);
+router.use("/api/login", loginRoutes);
+router.use("/api/user", userRoutes);
+router.use("/api/comment", commentRoutes);
+router.use("/api/reply", replyRoutes);
 
 export { router };

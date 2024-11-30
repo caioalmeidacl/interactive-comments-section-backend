@@ -8,12 +8,23 @@ class LoginController {
         const { username, password } = req.body;
 
         try {
-            await auth.login(username, password);
-            return res.status(200).send();
+            const { access_token } = await auth.login(username, password);
+            return res.status(200).json({ access_token });
         } catch(error) {
-            return res.status(400).json({message: error.message});
+            console.log(error);
+            return res.status(403).json({message: error.message});
         }
     }
+
+    async getUserLogged(req, res) {
+        try {
+            const { user } = await auth.getUserLogged(req);
+        
+            return res.status(200).json({ user });
+        } catch(error) {
+            res.status(400).json({message: error.message});
+        }
+    };
 }
 
 

@@ -5,11 +5,11 @@ import connectDB from "./database/database.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({origin: process.env.URL_FRONTEND}));
 app.use(express.json());
 
 connectDB();
 
 app.use(router);
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT, () => console.log("server working"));

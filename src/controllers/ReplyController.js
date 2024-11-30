@@ -10,9 +10,9 @@ class ReplyController {
             const userId = req.user.id;
             const { commentId, content } = req.body;
             
-            await this.replyService.createReply({ userId, commentId, content });
+            const reply = await this.replyService.createReply({ userId, commentId, content });
 
-            return res.status(201).send();
+            return res.status(201).json(reply);
         } catch(error) {
             return res.status(400).json({message: error.message});
         }

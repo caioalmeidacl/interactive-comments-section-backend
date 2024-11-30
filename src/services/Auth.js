@@ -9,22 +9,31 @@ class AuthService {
 
     async login(username, password) {
         const user = await this.userRepository.findByUsername(username);
-        
-        if(!user) throw new Error("User not found!");
+
+        if (!user) throw new Error("User not found!");
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        
-        if(!isPasswordValid) throw new Error("Invalid password");
 
-        const token = jsonwebtoken.sign(
-            { id: user._id, username: user.username},
+        if (!isPasswordValid) throw new Error("Invalid password");
+
+        const access_token = jsonwebtoken.sign(
+            { id: user._id, username: user.username },
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN }
         );
 
-        console.log(token);
-        return { token, user };
-    }   
+        return { access_token };
+    }
+
+    async getUserLogged(request) {
+        const token = request.header("Authorization")?.split(" ")[1];
+            
+        const verified = await jsonwebtoken.verify(token, process.env.JWT_SECRET);
+
+        const user = { id: verified.id, username: verified.username };
+
+        return { user };
+    }
 }
 
 export { AuthService };

@@ -16,4 +16,8 @@ commentRoutes.post("/", middleware, (req, res) => {
     return commentController.create(req, res);
 });
 
+commentRoutes.patch("/:id", middleware, (req, res) => {
+    return commentController.update(req, res);
+}); 
+
 export { commentRoutes }

@@ -17,8 +17,12 @@ class CommentService {
         return await this.commentRepository.findById(id);
     }
 
-    findAllByUser(id){
-        return this.commentRepository.findAllByUser(id);
+    async findAllByUser(id){
+        return await this.commentRepository.findAllByUser(id);
+    }
+
+    async update(id, score) {
+        return await this.commentRepository.update(id, score);
     }
 }
 

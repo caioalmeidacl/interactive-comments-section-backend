@@ -15,6 +15,11 @@ const commentSchema = new mongoose.Schema({
     score:{ 
         type: Number, 
         default: 0
+    },
+    
+    parentId: {
+        type: String,
+        default: null,
     }, 
 
     replies: 
@@ -22,7 +27,7 @@ const commentSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Comment"
-        }
+        }, 
     ],
 
     createdAt: {

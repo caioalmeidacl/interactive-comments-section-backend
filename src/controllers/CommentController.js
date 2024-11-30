@@ -9,10 +9,10 @@ class CommentController {
         try {
             const comment = request.body;
             const userId = request.user.id;
-
+            
             await this.commentService.create(comment, userId);
 
-            return response.status(201).send();                
+            return response.status(201).json({message: "Success"});
         } catch(error) {
             return response.status(400).json({error: error.message});
         } 
@@ -29,7 +29,7 @@ class CommentController {
     }
 
     async findById(request, response){
-        const id = request.parm;
+        const id = request.params;
 
         try { 
             const comment = await this.commentService.findById(id);
@@ -38,6 +38,20 @@ class CommentController {
         } catch(error) {
             return response.status(400).json({error: error.message});
         }        
+    }
+
+    async update(request, response) {
+        const { id } = request.params; 
+        const { score } = request.body;
+    
+        try {
+            const updated = await this.commentService.update(id, score);
+        
+            return response.status(200).json(updated);
+        } catch(error) {
+            console.log(error);
+            return response.status(400).json({error: error.message});
+        }
     }
 }
 
