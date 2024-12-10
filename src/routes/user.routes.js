@@ -4,7 +4,7 @@ import { middleware } from "../middleware/Middleware.js";
 
 const userRoutes = Router();
 
-userRoutes.post("/", middleware, (req, res) => {
+userRoutes.post("/signup", (req, res) => {
     return userController.create(req, res);
 });
 

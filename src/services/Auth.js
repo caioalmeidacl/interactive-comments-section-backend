@@ -10,7 +10,7 @@ class AuthService {
     async login(username, password) {
         const user = await this.userRepository.findByUsername(username);
 
-        if (!user) throw new Error("User not found!");
+        if (!user) throw new Error("Username not found!");
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
@@ -27,7 +27,7 @@ class AuthService {
 
     async getUserLogged(request) {
         const token = request.header("Authorization")?.split(" ")[1];
-            
+
         const verified = await jsonwebtoken.verify(token, process.env.JWT_SECRET);
 
         const user = { id: verified.id, username: verified.username };
