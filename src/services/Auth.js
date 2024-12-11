@@ -28,7 +28,7 @@ class AuthService {
     async getUserLogged(request) {
         const token = request.header("Authorization")?.split(" ")[1];
 
-        const verified = await jsonwebtoken.verify(token, process.env.JWT_SECRET);
+        const verified = jsonwebtoken.verify(token, process.env.JWT_SECRET);
 
         const user = { id: verified.id, username: verified.username };
 

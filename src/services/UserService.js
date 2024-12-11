@@ -18,6 +18,10 @@ class UserService {
     async getUsers() {
         return await this.userRepository.getUsers();
     }
+
+    async findLikedComments(userId) {
+        return await this.userRepository.findLikedComments(userId);
+    }
 }
 
 export { UserService };

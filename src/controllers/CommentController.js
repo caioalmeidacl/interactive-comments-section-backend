@@ -1,58 +1,67 @@
 import { CommentService } from "../services/CommentService.js";
+import jsonwebtoken from "jsonwebtoken";
 
 class CommentController {
-    constructor() {
-        this.commentService = new CommentService();
+  constructor() {
+    this.commentService = new CommentService();
+  }
+
+  async create(request, response) {
+    try {
+      const comment = request.body;
+      const userId = request.user.id;
+
+      await this.commentService.create(comment, userId);
+
+      return response.status(201).json({ message: "Success" });
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
     }
+  }
 
-    async create(request, response) {
-        try {
-            const comment = request.body;
-            const userId = request.user.id;
+  async getAllComment(request, response) {
+    try {
+      const comments = await this.commentService.getAllComment();
 
-            await this.commentService.create(comment, userId);
-
-            return response.status(201).json({ message: "Success" });
-        } catch (error) {
-            return response.status(400).json({ error: error.message });
-        }
-    };
-
-    async getAllComment(request, response) {
-        try {
-            const comments = await this.commentService.getAllComment();
-
-            return response.status(200).json(comments);
-        } catch (error) {
-            return response.status(400).json({ error: error.message });
-        }
+      return response.status(200).json(comments);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
     }
+  }
 
-    async findById(request, response) {
-        const id = request.params;
+  async findById(request, response) {
+    const id = request.params;
 
-        try {
-            const comment = await this.commentService.findById(id);
+    try {
+      const comment = await this.commentService.findById(id);
 
-            return response.status(200).json(comment);
-        } catch (error) {
-            return response.status(400).json({ error: error.message });
-        }
+      return response.status(200).json(comment);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
     }
+  }
 
-    async update(request, response) {
-        const { id } = request.params;
-        const { score } = request.body;
+  async update(request, response) {
+    const { id } = request.params;
+    const { score, action } = request.body;
+    const token = request.header("Authorization")?.split(" ")[1];
+    const verified = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+    const userId = verified.id;
 
-        try {
-            const updated = await this.commentService.update(id, score);
+    try {
+      const updated = await this.commentService.update({
+        commentId: id,
+        userId,
+        score,
+        action,
+      });
 
-            return response.status(200).json(updated);
-        } catch (error) {
-            console.log(error);
-            return response.status(400).json({ error: error.message });
-        }
+      return response.status(200).json(updated);
+    } catch (error) {
+      console.log(error);
+      return response.status(400).json({ error: error.message });
     }
+  }
 }
 
 export const commentController = new CommentController();

@@ -24,6 +24,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'defaultProfilePic.png'
     },
+    likedComments:
+        [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Comment",
+            }
+        ]
 });
 
 

@@ -12,4 +12,8 @@ userRoutes.get("/", middleware, (req, res) => {
     return userController.getAllUsers(req, res);
 });
 
+userRoutes.get('/likedComments', (req, res) => {
+    return userController.getLikedComments(req, res);
+});
+
 export { userRoutes };
