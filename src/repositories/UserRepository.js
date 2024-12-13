@@ -9,6 +9,12 @@ class UserRepository {
     return await User.findOne({ email });
   }
 
+  async getProfilePicture(userId) {
+    const user = await User.findById(userId).select("profilePicture").exec();
+
+    return user.profilePicture;
+  }
+
   async getUsers() {
     return await User.find();
   }

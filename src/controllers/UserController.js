@@ -9,6 +9,7 @@ class UserController {
   async create(request, response) {
     try {
       const user = request.body;
+      console.log(user);
       await this.userService.create(user);
 
       return response.status(201).json("success");

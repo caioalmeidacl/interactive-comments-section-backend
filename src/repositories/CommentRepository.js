@@ -61,13 +61,13 @@ class CommentRepository {
     return await Comment.findById(id).populate("replies");
   }
 
-  async update({ userId, commentId, score, action }) {
+  async update({ userId, commentId, score, hasLiked }) {
     const session = await mongoose.startSession();
 
     try {
       session.startTransaction();
 
-      if (action) {
+      if (!hasLiked) {
         await User.findByIdAndUpdate(
           userId,
           { $addToSet: { likedComments: commentId } },

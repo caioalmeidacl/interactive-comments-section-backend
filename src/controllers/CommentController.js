@@ -43,7 +43,7 @@ class CommentController {
 
   async update(request, response) {
     const { id } = request.params;
-    const { score, action } = request.body;
+    const { score, hasLiked } = request.body;
     const token = request.header("Authorization")?.split(" ")[1];
     const verified = jsonwebtoken.verify(token, process.env.JWT_SECRET);
     const userId = verified.id;
@@ -53,7 +53,7 @@ class CommentController {
         commentId: id,
         userId,
         score,
-        action,
+        hasLiked,
       });
 
       return response.status(200).json(updated);

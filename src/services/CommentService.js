@@ -21,12 +21,12 @@ class CommentService {
     return await this.commentRepository.findAllByUser(id);
   }
 
-  async update({ userId, commentId, score, action }) {
+  async update({ userId, commentId, score, hasLiked }) {
     return await this.commentRepository.update({
       userId,
       commentId,
       score,
-      action,
+      hasLiked,
     });
   }
 }
