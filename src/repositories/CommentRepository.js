@@ -106,6 +106,22 @@ class CommentRepository {
     }
     return score;
   }
+
+  async delete(id) {
+    return await Comment.findByIdAndDelete(id);
+  }
+  async updateComment(id, content) {
+    return await Comment.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          content,
+          createdAt: Date.now(),
+        },
+      },
+      { new: true },
+    );
+  }
 }
 
 export { CommentRepository };

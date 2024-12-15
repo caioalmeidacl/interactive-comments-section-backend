@@ -29,6 +29,14 @@ class CommentService {
       hasLiked,
     });
   }
+
+  async delete(id) {
+    return await this.commentRepository.delete(id);
+  }
+
+  async updateComment(id, content) {
+    return await this.commentRepository.updateComment(id, content);
+  }
 }
 
 export { CommentService };
